@@ -80,6 +80,8 @@ class Hash{
 	String[] arreglo;
 	int tamaño;
 	int contador;
+	static long tInicio, tFin;
+	static long  recorridos = 0, comparaciones = 0, intercambios = 0, tiempo = 0;
 
 	public Hash(int tam) {
 		tamaño = tam;
@@ -90,10 +92,13 @@ class Hash{
 	public void funcionHash(String[] cadArreglo, String[] arreglo) {
 		int i;
 		for (i = 0; i < cadArreglo.length; i++) {
+			recorridos+=1;
 			String elemento = cadArreglo[i];
 			int indiceArreglo = Integer.parseInt(elemento) % 20;
 			System.out.println("Indice: " + indiceArreglo + " para " + elemento);
 			while (arreglo[indiceArreglo] != "-1") {
+				recorridos+=1;
+				comparaciones+=1;
 				indiceArreglo++;
 				System.out.println("ColisiÃ³n en el indice: " + (indiceArreglo - 1) + " cambiando por " + indiceArreglo);
 				indiceArreglo %= tamaño; 
@@ -135,6 +140,8 @@ class Hash{
 		int contador = 0;
 		
 		while (arreglo[indiceArrglo] != "-1") {
+			recorridos+=1;
+			comparaciones+=1;
 			if (arreglo[indiceArrglo].equals(elemento)) {
 				System.out.println("Elemento " + elemento + " se encontro en el indice " + indiceArrglo);
 				return arreglo[indiceArrglo];
@@ -142,12 +149,31 @@ class Hash{
 			indiceArrglo++;
 			indiceArrglo %= tamaño;
 			contador++;
+			comparaciones+=1;
 			if (contador > 100) {
 				System.out.println("Error");
 				break;
 			}
 		}
 		return null;
+	}
+	
+	
+	public void llamadaHash(String[]nums, String valorB) {
+		tInicio = System.nanoTime();
+		funcionHash(nums, this.arreglo);
+		String buscarElemento = buscarClave(valorB);
+		if(buscarElemento == null) {
+			System.out.print("\n Elemento no encontrado");
+		}
+		tFin = System.nanoTime();
+		
+		tiempo = tFin-tInicio;
+		System.out.print("Tiempo: "+tiempo);
+		System.out.print("Recorridos: "+recorridos);
+		System.out.print("Comparaciones: "+comparaciones);
+		System.out.println("Intercambios: "+intercambios);
+		
 	}
 	
 }//Hash
