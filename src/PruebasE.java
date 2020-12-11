@@ -1,4 +1,6 @@
 import java.util.Arrays;
+import java.util.InputMismatchException;
+import java.util.Scanner;
 
 class BusquedaBinaria{
 	
@@ -39,10 +41,10 @@ class BusquedaBinaria{
 		tFin = System.nanoTime();
 		
 		tiempo = tFin-tInicio;
-		System.out.print("Tiempo: "+tiempo);
-		System.out.print("Recorridos: "+recorridos);
-		System.out.print("Comparaciones: "+comparaciones);
-		System.out.println("Intercambios: "+intercambios);
+		System.out.println("Tiempo: "+tiempo);
+		System.out.println("Recorridos: "+recorridos);
+		System.out.println("Comparaciones: "+comparaciones);
+		System.out.println("Intercambios: "+intercambios+"\n");
 		
     }
     
@@ -169,10 +171,10 @@ class Hash{
 		tFin = System.nanoTime();
 		
 		tiempo = tFin-tInicio;
-		System.out.print("Tiempo: "+tiempo);
-		System.out.print("Recorridos: "+recorridos);
-		System.out.print("Comparaciones: "+comparaciones);
-		System.out.println("Intercambios: "+intercambios);
+		System.out.println("Tiempo: "+tiempo);
+		System.out.println("Recorridos: "+recorridos);
+		System.out.println("Comparaciones: "+comparaciones);
+		System.out.println("Intercambios: "+intercambios+"\n");
 		
 	}
 	
@@ -181,6 +183,58 @@ class Hash{
 public class PruebasE {
 
 	public static void main(String[] args) {
+		Scanner ent=new Scanner(System.in);
+		
+		int[] nums = new int[100];
+		for (int i = 0; i < nums.length; i++) {
+			nums[i]=(int)(Math.random()*100);
+		}
+		
+		boolean salir = false;
+		
+		do {
+			System.out.println("¿Qué método deseas utilizar?");
+			System.out.println("1. Busqueda binaria");
+			System.out.println("2. Busqueda por funciones hash");
+			System.out.println("3. Salir");
+			
+			try {
+				System.out.println("Escribe una de las opciones");
+                int op = ent.nextInt();
+                
+                switch(op) {
+                	case 1:
+                		System.out.println("Ingrese el valor a buscar: ");
+                	    int valorB = ent.nextInt();
+                	    System.out.println("Arreglo: "+Arrays.toString(nums));
+                	    BusquedaBinaria.llamadaBusquedaBinaria(nums, valorB);
+                		break;
+                	case 2:
+                		System.out.println("Ingrese el valor a buscar: ");
+                	    String buscado = ent.nextLine();
+                	    String aux[]=new String[nums.length];
+            			for (int i = 0; i < aux.length; i++) {
+            				aux[i]=String.valueOf(nums[i]);
+            			}
+            			System.out.println("Arreglo: "+Arrays.toString(aux));
+            			Hash h = new Hash(100);
+            			h.llamadaHash(aux, buscado);
+                		break;
+                	case 3:
+                		salir = true;
+                		break;
+                	default:
+                		System.out.println("Debes ingresar números entre 1 y 3");
+                }
+                
+			} catch (InputMismatchException e) {
+				System.out.println("Debes ingresar un número");
+                ent.next();
+			}
+			
+		}while(!salir);
+		
+		
 
 
 	}
