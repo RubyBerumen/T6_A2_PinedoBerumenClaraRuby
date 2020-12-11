@@ -76,6 +76,81 @@ class BusquedaBinaria{
 
 
 
+class Hash{
+	String[] arreglo;
+	int tamaño;
+	int contador;
+
+	public Hash(int tam) {
+		tamaño = tam;
+		arreglo = new String[tam];
+		Arrays.fill(arreglo, "-1");
+	}
+
+	public void funcionHash(String[] cadArreglo, String[] arreglo) {
+		int i;
+		for (i = 0; i < cadArreglo.length; i++) {
+			String elemento = cadArreglo[i];
+			int indiceArreglo = Integer.parseInt(elemento) % 20;
+			System.out.println("Indice: " + indiceArreglo + " para " + elemento);
+			while (arreglo[indiceArreglo] != "-1") {
+				indiceArreglo++;
+				System.out.println("ColisiÃ³n en el indice: " + (indiceArreglo - 1) + " cambiando por " + indiceArreglo);
+				indiceArreglo %= tamaño; 
+			}
+			arreglo[indiceArreglo] = elemento;
+		}
+	}
+
+	public void mostrar() {
+		int incremento = 0;
+		int j;
+
+		for (int i = 0; i < 1; i++) {
+			incremento += 100;
+			System.out.println("");
+			System.out.println("------------------------------------------------------------------");
+			for (j = incremento - 100; j < incremento; j++) {
+				System.out.format(" | %3s " + " ", j);
+			}
+			System.out.println(" | ");
+			System.out.println();
+			for (j = incremento - 100; j < incremento; j++) {
+				if (arreglo[j].equals("-1")) {
+					System.out.println(" | ");
+				} else {
+					System.out.print(String.format(" | %3s" + " ", arreglo[j]));
+				}
+			}
+
+			System.out.println("|");
+			System.out.println("------------------------------------------------------------------");
+			System.out.println("");
+		}
+	}
+
+	public String buscarClave(String elemento) {
+		
+		int indiceArrglo = Integer.parseInt(elemento) % 99;
+		int contador = 0;
+		
+		while (arreglo[indiceArrglo] != "-1") {
+			if (arreglo[indiceArrglo].equals(elemento)) {
+				System.out.println("Elemento " + elemento + " se encontro en el indice " + indiceArrglo);
+				return arreglo[indiceArrglo];
+			}
+			indiceArrglo++;
+			indiceArrglo %= tamaño;
+			contador++;
+			if (contador > 100) {
+				System.out.println("Error");
+				break;
+			}
+		}
+		return null;
+	}
+	
+}//Hash
 
 public class PruebasE {
 
